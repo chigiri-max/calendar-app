@@ -1,15 +1,8 @@
-```html
 <!DOCTYPE html>
 <html lang="ja">
 <head>
 <meta charset="UTF-8">
-
-<meta name="viewport"
-      content="width=device-width,
-               initial-scale=1.0,
-               maximum-scale=1.0,
-               user-scalable=no">
-
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="theme-color" content="#405de6">
 
 <title>カレンダー</title>
@@ -18,15 +11,14 @@
 
 * {
     box-sizing: border-box;
-    -webkit-tap-highlight-color: transparent;
 }
 
 html,
 body {
+    margin: 0;
     width: 100%;
     height: 100%;
-    margin: 0;
-    padding: 0;
+    overflow: hidden;
 }
 
 body {
@@ -39,8 +31,6 @@ body {
 
     background: #f5f6fa;
     color: #333;
-
-    overflow: hidden;
 }
 
 button,
@@ -49,108 +39,99 @@ select {
     font: inherit;
 }
 
+button {
+    touch-action: manipulation;
+}
 
-/* =========================================
+
+/* =====================================================
    アプリ全体
-========================================= */
+===================================================== */
 
 .app {
     width: 100%;
     height: 100dvh;
-
-    min-height: 0;
+    min-height: 100vh;
 
     display: flex;
     flex-direction: column;
 
-    background: #f5f6fa;
+    background: #fff;
 }
 
 
-/* =========================================
+/* =====================================================
    ヘッダー
-========================================= */
+===================================================== */
 
 .header {
-    width: 100%;
     height: 58px;
-
-    flex: 0 0 58px;
-
-    display: flex;
-    align-items: center;
+    min-height: 58px;
 
     background: #405de6;
-    color: white;
-}
-
-.month-arrow {
-    width: 55px;
-    height: 58px;
-
-    flex: 0 0 55px;
-
-    border: none;
-    background: transparent;
-
-    color: white;
-
-    font-size: 32px;
-    line-height: 1;
-
-    cursor: pointer;
+    color: #fff;
 
     display: flex;
-    justify-content: center;
     align-items: center;
 }
 
 .month-button {
     flex: 1;
+    height: 100%;
 
-    width: 0;
-    height: 58px;
-
-    border: none;
+    border: 0;
     background: transparent;
 
-    color: white;
+    color: #fff;
 
     font-size: 20px;
-    font-weight: bold;
+    font-weight: 700;
+
+    cursor: pointer;
+}
+
+.month-arrow {
+    width: 55px;
+    min-width: 55px;
+    height: 100%;
+
+    border: 0;
+    background: transparent;
+
+    color: #fff;
+
+    font-size: 32px;
 
     cursor: pointer;
 }
 
 
-/* =========================================
+/* =====================================================
    曜日
-========================================= */
+===================================================== */
 
 .week-header {
-    width: 100%;
     height: 36px;
-
-    flex: 0 0 36px;
+    min-height: 36px;
 
     display: grid;
+
     grid-template-columns:
         repeat(7, minmax(0, 1fr));
 
-    background: white;
+    background: #fff;
 
     border-bottom: 1px solid #ddd;
 }
 
 .week-header div {
-    min-width: 0;
-
     display: flex;
+
     justify-content: center;
     align-items: center;
 
+    font-weight: 700;
     font-size: 14px;
-    font-weight: bold;
 }
 
 .sunday {
@@ -162,15 +143,12 @@ select {
 }
 
 
-/* =========================================
+/* =====================================================
    カレンダー
-========================================= */
+===================================================== */
 
 .calendar {
-    width: 100%;
-
-    flex: 1 1 auto;
-
+    flex: 1;
     min-height: 0;
 
     display: grid;
@@ -183,62 +161,42 @@ select {
 
     gap: 1px;
 
-    background: #d0d0d0;
+    background: #ccc;
 
     padding: 1px;
 
     touch-action: pan-y;
-}
-
-
-/* =========================================
-   日付マス
-========================================= */
-
-.day-cell {
-    position: relative;
-
-    min-width: 0;
-    min-height: 0;
-
-    background: white;
-
-    padding: clamp(2px, 0.4vw, 5px);
-
-    overflow: hidden;
-
-    display: flex;
-    flex-direction: column;
-
-    cursor: pointer;
 
     user-select: none;
 }
 
-.day-cell:active {
-    background: #eef1ff;
+.day-cell {
+    min-width: 0;
+    min-height: 0;
+
+    background: #fff;
+
+    padding: 3px;
+
+    overflow: hidden;
+
+    cursor: pointer;
+
+    display: flex;
+    flex-direction: column;
 }
 
 .day-cell.today {
     background: #ebf0ff;
 }
 
-
-/* =========================================
-   日付
-========================================= */
-
 .day-number {
-    width: 100%;
-    height: clamp(18px, 3vh, 24px);
+    height: 20px;
 
-    flex: 0 0 auto;
+    flex-shrink: 0;
 
-    font-size: clamp(11px, 1.5vw, 15px);
-
-    font-weight: bold;
-
-    line-height: 1.4;
+    font-size: 14px;
+    font-weight: 700;
 }
 
 .other-month .day-number {
@@ -246,31 +204,29 @@ select {
 }
 
 .holiday {
-    color: #f44336 !important;
+    color: #f44336;
 }
 
 
-/* =========================================
-   予定・Todo
-========================================= */
+/* =====================================================
+   予定・Todo表示
+===================================================== */
 
 .schedule-preview,
 .todo-preview {
-    width: 100%;
-
-    height: clamp(13px, 2.1vh, 17px);
-
-    flex: 0 0 auto;
+    white-space: nowrap;
 
     overflow: hidden;
 
-    white-space: nowrap;
-
     text-overflow: ellipsis;
 
-    font-size: clamp(8px, 1.15vw, 11px);
+    font-size: 10px;
 
-    line-height: clamp(13px, 2.1vh, 17px);
+    line-height: 15px;
+
+    height: 15px;
+
+    flex-shrink: 0;
 }
 
 .schedule-preview {
@@ -287,91 +243,66 @@ select {
 }
 
 .more {
-    width: 100%;
-
-    height: clamp(13px, 2.1vh, 17px);
-
-    flex: 0 0 auto;
-
-    overflow: hidden;
-
-    white-space: nowrap;
-
     color: #777;
 
-    font-size: clamp(7px, 1vw, 10px);
+    font-size: 9px;
 
-    line-height: clamp(13px, 2.1vh, 17px);
+    line-height: 15px;
+
+    height: 15px;
+
+    flex-shrink: 0;
 }
 
 
-/* =========================================
-   下部
-========================================= */
+/* =====================================================
+   ＋ボタン
+===================================================== */
 
 .bottom {
-    width: 100%;
-
     height: 70px;
+    min-height: 70px;
 
-    flex: 0 0 70px;
+    background: #fff;
 
     display: flex;
 
     justify-content: flex-end;
     align-items: center;
 
-    padding:
-        5px
-        max(12px, env(safe-area-inset-right))
-        5px
-        max(12px, env(safe-area-inset-left));
+    padding-right: 12px;
 
-    background: white;
+    flex-shrink: 0;
 
     box-shadow:
         0 -2px 8px rgba(0,0,0,.08);
-
-    z-index: 10;
 }
 
 .add-button {
     width: 60px;
     height: 60px;
 
-    flex: 0 0 60px;
-
-    border: none;
     border-radius: 50%;
+    border: 0;
 
     background: #405de6;
 
-    color: white;
+    color: #fff;
 
     font-size: 30px;
 
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
     cursor: pointer;
-
-    box-shadow:
-        0 3px 8px rgba(0,0,0,.2);
 }
 
 
-/* =========================================
-   日付モーダル
-========================================= */
+/* =====================================================
+   日付詳細モーダル
+===================================================== */
 
 .modal-background {
     position: fixed;
 
     inset: 0;
-
-    width: 100%;
-    height: 100%;
 
     background: rgba(0,0,0,.45);
 
@@ -388,9 +319,7 @@ select {
 }
 
 .bottom-sheet {
-    width: 100%;
-
-    max-width: 700px;
+    width: min(100%, 700px);
 
     max-height: 82dvh;
 
@@ -400,9 +329,7 @@ select {
         20px 20px 0 0;
 
     padding:
-        10px
-        15px
-        max(20px, env(safe-area-inset-bottom));
+        10px 15px 20px;
 
     overflow-y: auto;
 
@@ -413,11 +340,13 @@ select {
 @keyframes slideUp {
 
     from {
-        transform: translateY(100%);
+        transform:
+            translateY(100%);
     }
 
     to {
-        transform: translateY(0);
+        transform:
+            translateY(0);
     }
 }
 
@@ -425,17 +354,18 @@ select {
     width: 45px;
     height: 5px;
 
-    margin:
-        0 auto 10px;
-
     background: #ccc;
 
     border-radius: 10px;
+
+    margin:
+        0 auto 10px;
 }
 
 .sheet-title {
     font-size: 22px;
-    font-weight: bold;
+
+    font-weight: 700;
 
     padding:
         8px 3px 15px;
@@ -443,9 +373,11 @@ select {
 
 .section-title {
     font-size: 19px;
-    font-weight: bold;
 
-    margin: 8px 0;
+    font-weight: 700;
+
+    margin:
+        8px 0;
 }
 
 .schedule-title {
@@ -453,12 +385,14 @@ select {
 }
 
 
-/* =========================================
-   項目
-========================================= */
+/* =====================================================
+   予定・Todo一覧
+===================================================== */
 
 .item-row {
-    width: 100%;
+    background: #fff;
+
+    border-radius: 8px;
 
     min-height: 55px;
 
@@ -472,10 +406,6 @@ select {
     align-items: center;
 
     gap: 8px;
-
-    background: white;
-
-    border-radius: 8px;
 }
 
 .item-title {
@@ -494,15 +424,14 @@ select {
 
 .edit-button,
 .delete-button {
-    flex: 0 0 auto;
-
-    border: none;
+    border: 0;
 
     background: transparent;
 
     cursor: pointer;
 
-    padding: 5px;
+    padding:
+        8px 4px;
 }
 
 .edit-button {
@@ -520,34 +449,33 @@ select {
 }
 
 
-/* =========================================
-   Todo
-========================================= */
+/* =====================================================
+   Todoチェック
+===================================================== */
 
 .todo-check {
     width: 20px;
     height: 20px;
 
-    flex: 0 0 20px;
+    flex:
+        0 0 20px;
 }
 
 .todo-completed {
     text-decoration: line-through;
+
     color: #999;
 }
 
 
-/* =========================================
+/* =====================================================
    追加画面
-========================================= */
+===================================================== */
 
 .add-screen {
     position: fixed;
 
     inset: 0;
-
-    width: 100%;
-    height: 100dvh;
 
     background: #f5f6fa;
 
@@ -563,31 +491,29 @@ select {
 }
 
 .add-header {
-    width: 100%;
-
     height: 58px;
-
-    flex: 0 0 58px;
-
-    display: flex;
-    align-items: center;
+    min-height: 58px;
 
     background: #405de6;
 
-    color: white;
+    color: #fff;
+
+    display: flex;
+
+    align-items: center;
 }
 
 .back-button {
     width: 55px;
-    height: 58px;
+    min-width: 55px;
 
-    flex: 0 0 55px;
+    height: 100%;
 
-    border: none;
+    border: 0;
 
     background: transparent;
 
-    color: white;
+    color: #fff;
 
     font-size: 32px;
 }
@@ -599,27 +525,27 @@ select {
 
     font-size: 19px;
 
-    font-weight: bold;
+    font-weight: 700;
 }
 
 .add-content {
     flex: 1;
 
-    min-height: 0;
-
     overflow-y: auto;
 
-    padding:
-        16px
-        max(16px, env(safe-area-inset-right))
-        30px
-        max(16px, env(safe-area-inset-left));
+    padding: 16px;
+
+    padding-bottom:
+        max(
+            16px,
+            env(safe-area-inset-bottom)
+        );
 }
 
 .form-title {
     font-size: 20px;
 
-    font-weight: bold;
+    font-weight: 700;
 
     margin:
         5px 0 12px;
@@ -644,18 +570,11 @@ select {
 
     border-radius: 6px;
 
-    background: white;
+    background: #fff;
 
     padding: 10px;
 
     font-size: 16px;
-
-    outline: none;
-}
-
-input[type="text"]:focus,
-select:focus {
-    border-color: #405de6;
 }
 
 .form-button {
@@ -663,21 +582,22 @@ select:focus {
 
     height: 52px;
 
-    border: none;
+    border: 0;
 
     border-radius: 6px;
 
     background: #405de6;
 
-    color: white;
+    color: #fff;
 
-    font-weight: bold;
+    font-weight: 700;
 
     cursor: pointer;
 }
 
 .checkbox-row {
-    margin: 10px 0;
+    margin:
+        10px 0;
 }
 
 .checkbox-row label {
@@ -689,19 +609,17 @@ select:focus {
 }
 
 
-/* =========================================
+/* =====================================================
    年月選択
-========================================= */
+===================================================== */
 
 .year-month-modal {
     position: fixed;
 
     inset: 0;
 
-    width: 100%;
-    height: 100%;
-
-    background: rgba(0,0,0,.45);
+    background:
+        rgba(0,0,0,.45);
 
     display: none;
 
@@ -715,21 +633,16 @@ select:focus {
 }
 
 .year-month-box {
-    width: 100%;
-
-    max-width: 700px;
+    width: min(100%, 700px);
 
     margin: 0 auto;
 
-    background: white;
+    background: #fff;
 
     border-radius:
         20px 20px 0 0;
 
-    padding:
-        20px
-        20px
-        max(20px, env(safe-area-inset-bottom));
+    padding: 20px;
 }
 
 .year-title {
@@ -737,7 +650,7 @@ select:focus {
 
     font-size: 21px;
 
-    font-weight: bold;
+    font-weight: 700;
 
     margin-bottom: 10px;
 }
@@ -756,26 +669,24 @@ select:focus {
     width: 50px;
     height: 45px;
 
-    border: none;
+    border: 0;
 
     background: #eee;
 
     font-size: 25px;
-
-    border-radius: 6px;
 }
 
 .year-control span {
     font-size: 20px;
 
-    font-weight: bold;
+    font-weight: 700;
 }
 
 .month-grid {
     display: grid;
 
     grid-template-columns:
-        repeat(3, 1fr);
+        repeat(3,1fr);
 
     gap: 8px;
 
@@ -785,130 +696,154 @@ select:focus {
 .month-grid button {
     height: 50px;
 
-    border: none;
+    border: 0;
 
     border-radius: 6px;
 
     background: #f0f1f5;
 
-    font-weight: bold;
+    font-weight: 700;
 }
 
 .month-grid button.selected {
     background: #405de6;
 
-    color: white;
+    color: #fff;
 }
 
 
-/* =========================================
-   PC表示
-========================================= */
+/* =====================================================
+   PC
+===================================================== */
 
-@media (min-width: 801px) {
+@media (min-width: 700px) {
 
     .app {
-        width: min(100%, 1000px);
+        max-width: 1100px;
 
         margin: 0 auto;
 
         box-shadow:
-            0 0 20px rgba(0,0,0,.08);
+            0 0 18px rgba(0,0,0,.08);
     }
 
-    body {
-        overflow: auto;
+    .day-number {
+        font-size: 15px;
     }
 
+    .schedule-preview,
+    .todo-preview {
+        font-size: 11px;
+    }
 }
 
 
-/* =========================================
-   小さいスマホ
-========================================= */
+/* =====================================================
+   スマホ
+===================================================== */
 
-@media (max-width: 380px) {
+@media (max-width: 600px) {
 
     .header {
-        height: 52px;
-        flex-basis: 52px;
+        height: 54px;
+        min-height: 54px;
     }
 
     .month-arrow {
         width: 48px;
-        height: 52px;
-        flex-basis: 48px;
-        font-size: 28px;
+        min-width: 48px;
     }
 
     .month-button {
-        height: 52px;
         font-size: 18px;
     }
 
     .week-header {
         height: 32px;
-        flex-basis: 32px;
+        min-height: 32px;
     }
 
     .week-header div {
+        font-size: 13px;
+    }
+
+    .day-cell {
+        padding: 2px;
+    }
+
+    .day-number {
         font-size: 12px;
+
+        height: 18px;
+    }
+
+    .schedule-preview,
+    .todo-preview {
+        font-size: 9px;
+
+        line-height: 14px;
+
+        height: 14px;
+    }
+
+    .more {
+        font-size: 8px;
+
+        line-height: 14px;
+
+        height: 14px;
     }
 
     .bottom {
-        height: 65px;
-        flex-basis: 65px;
+        height: 68px;
+
+        min-height: 68px;
     }
 
     .add-button {
-        width: 55px;
-        height: 55px;
-        flex-basis: 55px;
+        width: 56px;
+        height: 56px;
     }
-
 }
 
 
-/* =========================================
-   横向きスマホ
-========================================= */
+/* =====================================================
+   画面が縦に小さい場合
+===================================================== */
 
-@media (
-    max-height: 500px
-) and (
-    orientation: landscape
-) {
+@media (max-height: 650px) {
 
     .header {
-        height: 45px;
-        flex-basis: 45px;
-    }
-
-    .month-arrow {
-        height: 45px;
-    }
-
-    .month-button {
-        height: 45px;
+        height: 50px;
+        min-height: 50px;
     }
 
     .week-header {
-        height: 28px;
-        flex-basis: 28px;
+        height: 30px;
+        min-height: 30px;
     }
 
     .bottom {
-        height: 55px;
-        flex-basis: 55px;
+        height: 60px;
+        min-height: 60px;
     }
 
     .add-button {
-        width: 48px;
-        height: 48px;
-        flex-basis: 48px;
-        font-size: 25px;
+        width: 52px;
+        height: 52px;
     }
 
+    .day-number {
+        height: 17px;
+    }
+
+    .schedule-preview,
+    .todo-preview,
+    .more {
+        line-height: 13px;
+
+        height: 13px;
+    }
 }
 
 </style>
@@ -917,33 +852,42 @@ select:focus {
 
 <body>
 
+
 <div class="app">
 
-    <!-- ヘッダー -->
+
+    <!-- =================================================
+         ヘッダー
+    ================================================== -->
 
     <div class="header">
 
         <button
             class="month-arrow"
-            id="previousMonth">
+            id="previousMonth"
+            aria-label="前の月">
             ‹
         </button>
 
         <button
             class="month-button"
-            id="monthButton">
+            id="monthButton"
+            aria-label="年月を選択">
         </button>
 
         <button
             class="month-arrow"
-            id="nextMonth">
+            id="nextMonth"
+            aria-label="次の月">
             ›
         </button>
 
     </div>
 
 
-    <!-- 曜日 -->
+    <!-- =================================================
+         曜日
+    ================================================== -->
 
     <div class="week-header">
 
@@ -958,7 +902,9 @@ select:focus {
     </div>
 
 
-    <!-- カレンダー -->
+    <!-- =================================================
+         カレンダー
+    ================================================== -->
 
     <div
         class="calendar"
@@ -966,13 +912,16 @@ select:focus {
     </div>
 
 
-    <!-- ＋ボタン -->
+    <!-- =================================================
+         ＋ボタン
+    ================================================== -->
 
     <div class="bottom">
 
         <button
             class="add-button"
-            id="homeAddButton">
+            id="homeAddButton"
+            aria-label="追加">
             +
         </button>
 
@@ -981,9 +930,9 @@ select:focus {
 </div>
 
 
-<!-- ===============================
+<!-- =====================================================
      日付詳細
-=============================== -->
+===================================================== -->
 
 <div
     class="modal-background"
@@ -998,18 +947,20 @@ select:focus {
             id="dateTitle">
         </div>
 
-        <div
-            class="section-title schedule-title">
+
+        <div class="section-title schedule-title">
             📅 予定
         </div>
 
         <div id="scheduleList"></div>
+
 
         <div class="section-title">
             ☑ Todo
         </div>
 
         <div id="todoList"></div>
+
 
         <button
             class="form-button"
@@ -1023,19 +974,21 @@ select:focus {
 </div>
 
 
-<!-- ===============================
+<!-- =====================================================
      追加画面
-=============================== -->
+===================================================== -->
 
 <div
     class="add-screen"
     id="addScreen">
 
+
     <div class="add-header">
 
         <button
             class="back-button"
-            id="backButton">
+            id="backButton"
+            aria-label="戻る">
             ‹
         </button>
 
@@ -1051,6 +1004,7 @@ select:focus {
 
     <div class="add-content">
 
+
         <!-- 予定 -->
 
         <div class="form-group">
@@ -1059,14 +1013,17 @@ select:focus {
                 📅 予定を追加
             </div>
 
+
             <input
                 type="text"
                 id="scheduleInput"
                 placeholder="予定のタイトル">
 
+
             <div style="margin-top:10px;">
                 繰り返し
             </div>
+
 
             <select id="scheduleRepeat">
 
@@ -1088,6 +1045,7 @@ select:focus {
 
             </select>
 
+
             <button
                 class="form-button"
                 id="addSchedule"
@@ -1106,14 +1064,17 @@ select:focus {
                 ☑ Todoを追加
             </div>
 
+
             <input
                 type="text"
                 id="todoInput"
                 placeholder="Todoを入力">
 
+
             <div style="margin-top:10px;">
                 繰り返し
             </div>
+
 
             <select id="todoRepeat">
 
@@ -1164,19 +1125,21 @@ select:focus {
 </div>
 
 
-<!-- ===============================
+<!-- =====================================================
      年月選択
-=============================== -->
+===================================================== -->
 
 <div
     class="year-month-modal"
     id="yearMonthModal">
+
 
     <div class="year-month-box">
 
         <div class="year-title">
             年月を選択
         </div>
+
 
         <div class="year-control">
 
@@ -1192,6 +1155,7 @@ select:focus {
 
         </div>
 
+
         <div
             class="month-grid"
             id="monthGrid">
@@ -1204,22 +1168,19 @@ select:focus {
 
 <script>
 
-/* =========================================
+
+/* =====================================================
    データ
-========================================= */
+===================================================== */
 
 let schedules =
     JSON.parse(
-        localStorage.getItem(
-            "schedules"
-        ) || "[]"
+        localStorage.getItem("schedules") || "[]"
     );
 
 let todos =
     JSON.parse(
-        localStorage.getItem(
-            "todos"
-        ) || "[]"
+        localStorage.getItem("todos") || "[]"
     );
 
 
@@ -1235,9 +1196,9 @@ let selectedDate =
     new Date();
 
 
-/* =========================================
+/* =====================================================
    保存
-========================================= */
+===================================================== */
 
 function saveData() {
 
@@ -1253,9 +1214,9 @@ function saveData() {
 }
 
 
-/* =========================================
+/* =====================================================
    ID
-========================================= */
+===================================================== */
 
 function createId() {
 
@@ -1266,43 +1227,61 @@ function createId() {
 }
 
 
-/* =========================================
+/* =====================================================
    日付キー
-========================================= */
+===================================================== */
 
 function dateKey(date) {
 
-    const y =
-        date.getFullYear();
-
-    const m =
-        String(
+    return (
+        `${date.getFullYear()}-`
+        + `${String(
             date.getMonth() + 1
-        ).padStart(2, "0");
-
-    const d =
-        String(
+        ).padStart(2, "0")}-`
+        + `${String(
             date.getDate()
-        ).padStart(2, "0");
-
-    return `${y}-${m}-${d}`;
+        ).padStart(2, "0")}`
+    );
 }
 
 
-/* =========================================
-   予定の日付判定
-========================================= */
+/* =====================================================
+   ローカル日付
+===================================================== */
 
-function isDate(item, date) {
+function localDate(
+    year,
+    month,
+    day
+) {
+
+    return new Date(
+        year,
+        month - 1,
+        day
+    );
+}
+
+
+/* =====================================================
+   予定・Todoの日付判定
+===================================================== */
+
+function isDate(
+    item,
+    date
+) {
 
     const start =
-        new Date(
+        localDate(
             item.year,
-            item.month - 1,
+            item.month,
             item.day
         );
 
+
     if (date < start) {
+
         return false;
     }
 
@@ -1310,19 +1289,25 @@ function isDate(item, date) {
     switch (item.repeat) {
 
         case "DAILY":
+
             return true;
 
+
         case "WEEKLY":
+
             return (
                 date.getDay()
                 === start.getDay()
             );
 
+
         case "MONTHLY":
+
             return (
                 date.getDate()
                 === start.getDate()
             );
+
 
         default:
 
@@ -1334,9 +1319,9 @@ function isDate(item, date) {
 }
 
 
-/* =========================================
+/* =====================================================
    日本の祝日
-========================================= */
+===================================================== */
 
 function getJapaneseHolidays(year) {
 
@@ -1349,15 +1334,14 @@ function getJapaneseHolidays(year) {
         name
     ) {
 
-        const date =
-            new Date(
-                year,
-                month - 1,
-                day
-            );
-
         holidays[
-            dateKey(date)
+            dateKey(
+                new Date(
+                    year,
+                    month - 1,
+                    day
+                )
+            )
         ] = name;
     }
 
@@ -1374,13 +1358,17 @@ function getJapaneseHolidays(year) {
                 1
             );
 
-        const firstDay =
-            first.getDay();
 
         const day =
             1
-            + ((8 - firstDay) % 7)
-            + (nth - 1) * 7;
+            + (
+                (8 - first.getDay())
+                % 7
+            )
+            + (
+                (nth - 1) * 7
+            );
+
 
         return new Date(
             year,
@@ -1390,16 +1378,55 @@ function getJapaneseHolidays(year) {
     }
 
 
-    add(1, 1, "元日");
+    /* 春分の日 */
+
+    const vernal =
+        Math.floor(
+            20.8431
+            + 0.242194
+                * (year - 1980)
+            - Math.floor(
+                (year - 1980) / 4
+            )
+        );
 
 
-    const comingOfAge =
-        nthMonday(1, 2);
+    /* 秋分の日 */
+
+    const autumnal =
+        Math.floor(
+            23.2488
+            + 0.242194
+                * (year - 1980)
+            - Math.floor(
+                (year - 1980) / 4
+            )
+        );
+
+
+    /* 元日 */
+
+    add(
+        1,
+        1,
+        "元日"
+    );
+
+
+    /* 成人の日 */
+
+    let date =
+        nthMonday(
+            1,
+            2
+        );
 
     holidays[
-        dateKey(comingOfAge)
+        dateKey(date)
     ] = "成人の日";
 
+
+    /* 建国記念の日 */
 
     add(
         2,
@@ -1407,35 +1434,49 @@ function getJapaneseHolidays(year) {
         "建国記念の日"
     );
 
-    add(
-        2,
-        23,
-        "天皇誕生日"
-    );
 
+    /* 天皇誕生日 */
 
-    const springDay =
-        Math.floor(
-            20.8431
-            + 0.242194
-            * (year - 1980)
-            - Math.floor(
-                (year - 1980) / 4
-            )
+    if (year >= 2020) {
+
+        add(
+            2,
+            23,
+            "天皇誕生日"
         );
+
+    } else if (
+        year >= 1989
+        && year <= 2018
+    ) {
+
+        add(
+            12,
+            23,
+            "天皇誕生日"
+        );
+    }
+
+
+    /* 春分の日 */
 
     add(
         3,
-        springDay,
+        vernal,
         "春分の日"
     );
 
+
+    /* 昭和の日 */
 
     add(
         4,
         29,
         "昭和の日"
     );
+
+
+    /* ゴールデンウィーク */
 
     add(
         5,
@@ -1456,13 +1497,20 @@ function getJapaneseHolidays(year) {
     );
 
 
-    const marine =
-        nthMonday(7, 3);
+    /* 海の日 */
+
+    date =
+        nthMonday(
+            7,
+            3
+        );
 
     holidays[
-        dateKey(marine)
+        dateKey(date)
     ] = "海の日";
 
+
+    /* 山の日 */
 
     add(
         8,
@@ -1471,44 +1519,51 @@ function getJapaneseHolidays(year) {
     );
 
 
-    const respect =
-        nthMonday(9, 3);
+    /* 敬老の日 */
+
+    date =
+        nthMonday(
+            9,
+            3
+        );
 
     holidays[
-        dateKey(respect)
+        dateKey(date)
     ] = "敬老の日";
 
 
-    const autumnDay =
-        Math.floor(
-            23.2488
-            + 0.242194
-            * (year - 1980)
-            - Math.floor(
-                (year - 1980) / 4
-            )
-        );
+    /* 秋分の日 */
 
     add(
         9,
-        autumnDay,
+        autumnal,
         "秋分の日"
     );
 
 
-    const sports =
-        nthMonday(10, 2);
+    /* スポーツの日 */
+
+    date =
+        nthMonday(
+            10,
+            2
+        );
 
     holidays[
-        dateKey(sports)
+        dateKey(date)
     ] = "スポーツの日";
 
+
+    /* 文化の日 */
 
     add(
         11,
         3,
         "文化の日"
     );
+
+
+    /* 勤労感謝の日 */
 
     add(
         11,
@@ -1517,63 +1572,255 @@ function getJapaneseHolidays(year) {
     );
 
 
-    /* 振替休日 */
+    /* =================================================
+       2020年特例
+    ================================================= */
 
-    const original =
-        Object.keys(holidays)
-            .map(key => ({
-                key,
-                name:
-                    holidays[key]
-            }));
+    if (year === 2020) {
 
+        delete holidays[
+            dateKey(
+                new Date(
+                    year,
+                    6,
+                    20
+                )
+            )
+        ];
+
+        delete holidays[
+            dateKey(
+                new Date(
+                    year,
+                    9,
+                    12
+                )
+            )
+        ];
+
+
+        add(
+            7,
+            23,
+            "海の日"
+        );
+
+        add(
+            7,
+            24,
+            "スポーツの日"
+        );
+
+        add(
+            8,
+            10,
+            "山の日"
+        );
+    }
+
+
+    /* =================================================
+       2021年特例
+    ================================================= */
+
+    if (year === 2021) {
+
+        delete holidays[
+            dateKey(
+                new Date(
+                    year,
+                    6,
+                    19
+                )
+            )
+        ];
+
+        delete holidays[
+            dateKey(
+                new Date(
+                    year,
+                    9,
+                    11
+                )
+            )
+        ];
+
+
+        add(
+            7,
+            22,
+            "海の日"
+        );
+
+        add(
+            7,
+            23,
+            "スポーツの日"
+        );
+
+        add(
+            8,
+            8,
+            "山の日"
+        );
+    }
+
+
+    /* =================================================
+       国民の休日
+    ================================================= */
 
     for (
-        const holiday of original
+        let day = 1;
+        day <= 366;
+        day++
     ) {
 
-        const parts =
-            holiday.key.split("-");
-
-
-        const date =
+        const current =
             new Date(
-                Number(parts[0]),
-                Number(parts[1]) - 1,
-                Number(parts[2])
+                year,
+                0,
+                day
             );
 
 
         if (
-            date.getDay() === 0
+            current.getFullYear()
+            !== year
         ) {
 
-            let substitute =
-                new Date(date);
+            break;
+        }
 
+
+        if (
+            current.getDay() === 0
+            || current.getDay() === 6
+            || holidays[
+                dateKey(current)
+            ]
+        ) {
+
+            continue;
+        }
+
+
+        const previous =
+            new Date(current);
+
+        previous.setDate(
+            current.getDate() - 1
+        );
+
+
+        const next =
+            new Date(current);
+
+        next.setDate(
+            current.getDate() + 1
+        );
+
+
+        if (
+            holidays[
+                dateKey(previous)
+            ]
+            &&
+            holidays[
+                dateKey(next)
+            ]
+        ) {
+
+            holidays[
+                dateKey(current)
+            ] = "国民の休日";
+        }
+    }
+
+
+    /* =================================================
+       振替休日
+    ================================================= */
+
+    const originals =
+        Object.keys(
+            holidays
+        );
+
+
+    for (
+        const key of originals
+    ) {
+
+        const holidayDate =
+            new Date(
+                key + "T00:00:00"
+            );
+
+
+        if (
+            holidayDate.getDay()
+            !== 0
+        ) {
+
+            continue;
+        }
+
+
+        let substitute =
+            new Date(
+                holidayDate
+            );
+
+
+        substitute.setDate(
+            substitute.getDate() + 1
+        );
+
+
+        while (
+            holidays[
+                dateKey(substitute)
+            ]
+            ||
+            substitute.getDay() === 0
+            ||
+            substitute.getDay() === 6
+        ) {
 
             substitute.setDate(
                 substitute.getDate() + 1
             );
-
-
-            while (
-                holidays[
-                    dateKey(substitute)
-                ]
-            ) {
-
-                substitute.setDate(
-                    substitute.getDate() + 1
-                );
-            }
-
-
-            holidays[
-                dateKey(substitute)
-            ] =
-                "振替休日";
         }
+
+
+        holidays[
+            dateKey(substitute)
+        ] = "振替休日";
+    }
+
+
+    /* =================================================
+       2019年特例
+    ================================================= */
+
+    if (year === 2019) {
+
+        holidays[
+            "2019-04-30"
+        ] = "国民の休日";
+
+        holidays[
+            "2019-05-01"
+        ] = "即位の日";
+
+        holidays[
+            "2019-05-02"
+        ] = "国民の休日";
+
+        holidays[
+            "2019-10-22"
+        ] = "即位礼正殿の儀";
     }
 
 
@@ -1581,9 +1828,62 @@ function getJapaneseHolidays(year) {
 }
 
 
-/* =========================================
-   カレンダー
-========================================= */
+/* =====================================================
+   指定日の予定・Todo
+===================================================== */
+
+function getItemsForDate(
+    date
+) {
+
+    const items = [];
+
+
+    for (
+        const schedule of schedules
+    ) {
+
+        if (
+            isDate(
+                schedule,
+                date
+            )
+        ) {
+
+            items.push({
+                type: "schedule",
+                item: schedule
+            });
+        }
+    }
+
+
+    for (
+        const todo of todos
+    ) {
+
+        if (
+            isDate(
+                todo,
+                date
+            )
+        ) {
+
+            items.push({
+                type: "todo",
+                item: todo
+            });
+        }
+    }
+
+
+    return items;
+}
+
+
+/* =====================================================
+   カレンダー表示
+===================================================== */
 
 function renderCalendar() {
 
@@ -1598,6 +1898,7 @@ function renderCalendar() {
 
     const year =
         currentMonth.getFullYear();
+
 
     const month =
         currentMonth.getMonth();
@@ -1676,13 +1977,9 @@ function renderCalendar() {
         }
 
 
-        /* 今日 */
-
         if (
             dateKey(date)
-            === dateKey(
-                new Date()
-            )
+            === dateKey(new Date())
         ) {
 
             cell.classList.add(
@@ -1709,7 +2006,8 @@ function renderCalendar() {
 
         if (
             date.getDay() === 0
-            || holidays[
+            ||
+            holidays[
                 dateKey(date)
             ]
         ) {
@@ -1736,7 +2034,8 @@ function renderCalendar() {
 
         if (
             thisMonth
-            && holidays[
+            &&
+            holidays[
                 dateKey(date)
             ]
         ) {
@@ -1763,62 +2062,19 @@ function renderCalendar() {
         }
 
 
-        /* 項目 */
+        /* 予定＋Todo */
 
-        const items = [];
-
-
-        schedules.forEach(
-            schedule => {
-
-                if (
-                    isDate(
-                        schedule,
-                        date
-                    )
-                ) {
-
-                    items.push({
-                        type:
-                            "schedule",
-
-                        item:
-                            schedule
-                    });
-                }
-            }
-        );
-
-
-        todos.forEach(
-            todo => {
-
-                if (
-                    isDate(
-                        todo,
-                        date
-                    )
-                ) {
-
-                    items.push({
-                        type:
-                            "todo",
-
-                        item:
-                            todo
-                    });
-                }
-            }
-        );
+        const items =
+            getItemsForDate(
+                date
+            );
 
 
         /*
-           4件以下
-           → 4件表示
+           4件までは4件表示
 
-           5件以上
-           → 3件表示
-           → 他○件
+           5件以上なら
+           3件＋他○件
         */
 
         const displayCount =
@@ -1847,8 +2103,8 @@ function renderCalendar() {
 
 
             if (
-                data.type
-                === "schedule"
+                data.type ===
+                "schedule"
             ) {
 
                 text.className =
@@ -1856,8 +2112,7 @@ function renderCalendar() {
 
 
                 /*
-                   予定の左側に
-                   ○を表示しない
+                   予定の左に○は付けない
                 */
 
                 text.textContent =
@@ -1900,6 +2155,8 @@ function renderCalendar() {
         }
 
 
+        /* 5件以上 */
+
         if (
             items.length >= 5
         ) {
@@ -1915,7 +2172,7 @@ function renderCalendar() {
 
 
             more.textContent =
-                `…他${items.length - 3}件`;
+                `…他${items.length - displayCount}件`;
 
 
             cell.appendChild(
@@ -1924,14 +2181,38 @@ function renderCalendar() {
         }
 
 
-        /* 日付クリック */
+        /* =================================================
+           日付クリック
+        ================================================= */
 
         cell.addEventListener(
             "click",
             () => {
 
+                if (
+                    suppressNextClick
+                ) {
+
+                    return;
+                }
+
+
+                suppressNextClick =
+                    true;
+
+
+                setTimeout(
+                    () => {
+                        suppressNextClick =
+                            false;
+                    },
+                    250
+                );
+
+
                 selectedDate =
                     new Date(date);
+
 
                 showDateModal();
             }
@@ -1945,9 +2226,9 @@ function renderCalendar() {
 }
 
 
-/* =========================================
-   Todo完了
-========================================= */
+/* =====================================================
+   Todo完了状態
+===================================================== */
 
 function isTodoCompleted(
     todo,
@@ -1971,6 +2252,10 @@ function isTodoCompleted(
 }
 
 
+/* =====================================================
+   Todo完了変更
+===================================================== */
+
 function setTodoCompleted(
     todo,
     date,
@@ -1992,7 +2277,8 @@ function setTodoCompleted(
         !todo.completedDates
     ) {
 
-        todo.completedDates = [];
+        todo.completedDates =
+            [];
     }
 
 
@@ -2001,13 +2287,15 @@ function setTodoCompleted(
 
 
     const index =
-        todo.completedDates
-            .indexOf(key);
+        todo.completedDates.indexOf(
+            key
+        );
 
 
     if (
         completed
-        && index === -1
+        &&
+        index === -1
     ) {
 
         todo.completedDates.push(
@@ -2016,7 +2304,8 @@ function setTodoCompleted(
 
     } else if (
         !completed
-        && index !== -1
+        &&
+        index !== -1
     ) {
 
         todo.completedDates.splice(
@@ -2027,17 +2316,11 @@ function setTodoCompleted(
 }
 
 
-/* =========================================
-   日付詳細
-========================================= */
+/* =====================================================
+   日付詳細表示
+===================================================== */
 
 function showDateModal() {
-
-    const modal =
-        document.getElementById(
-            "dateModal"
-        );
-
 
     document.getElementById(
         "dateTitle"
@@ -2059,15 +2342,29 @@ function showDateModal() {
         );
 
 
-    scheduleList.innerHTML = "";
-    todoList.innerHTML = "";
+    scheduleList.innerHTML =
+        "";
+
+    todoList.innerHTML =
+        "";
 
 
-    let scheduleCount = 0;
+    let scheduleCount =
+        0;
 
+    let todoCount =
+        0;
+
+
+    /* =================================================
+       予定
+    ================================================= */
 
     schedules.forEach(
-        (schedule, index) => {
+        (
+            schedule,
+            index
+        ) => {
 
             if (
                 !isDate(
@@ -2149,9 +2446,11 @@ function showDateModal() {
                     );
 
 
-            row.appendChild(title);
-            row.appendChild(edit);
-            row.appendChild(del);
+            row.append(
+                title,
+                edit,
+                del
+            );
 
 
             scheduleList.appendChild(
@@ -2162,21 +2461,25 @@ function showDateModal() {
 
 
     if (
-        scheduleCount === 0
+        !scheduleCount
     ) {
 
         scheduleList.innerHTML =
-            `<div class="empty">
-                予定はありません
-            </div>`;
+            '<div class="empty">'
+            + '予定はありません'
+            + '</div>';
     }
 
 
-    let todoCount = 0;
-
+    /* =================================================
+       Todo
+    ================================================= */
 
     todos.forEach(
-        (todo, index) => {
+        (
+            todo,
+            index
+        ) => {
 
             if (
                 !isDate(
@@ -2259,7 +2562,9 @@ function showDateModal() {
 
                     saveData();
 
+
                     showDateModal();
+
 
                     renderCalendar();
                 };
@@ -2281,7 +2586,9 @@ function showDateModal() {
 
             edit.onclick =
                 () =>
-                    editTodo(index);
+                    editTodo(
+                        index
+                    );
 
 
             const del =
@@ -2300,13 +2607,17 @@ function showDateModal() {
 
             del.onclick =
                 () =>
-                    deleteTodo(index);
+                    deleteTodo(
+                        index
+                    );
 
 
-            row.appendChild(check);
-            row.appendChild(title);
-            row.appendChild(edit);
-            row.appendChild(del);
+            row.append(
+                check,
+                title,
+                edit,
+                del
+            );
 
 
             todoList.appendChild(
@@ -2317,25 +2628,27 @@ function showDateModal() {
 
 
     if (
-        todoCount === 0
+        !todoCount
     ) {
 
         todoList.innerHTML =
-            `<div class="empty">
-                Todoはありません
-            </div>`;
+            '<div class="empty">'
+            + 'Todoはありません'
+            + '</div>';
     }
 
 
-    modal.classList.add(
+    document.getElementById(
+        "dateModal"
+    ).classList.add(
         "show"
     );
 }
 
 
-/* =========================================
-   削除
-========================================= */
+/* =====================================================
+   予定削除
+===================================================== */
 
 function deleteSchedule(
     index
@@ -2346,13 +2659,20 @@ function deleteSchedule(
         1
     );
 
+
     saveData();
 
+
     showDateModal();
+
 
     renderCalendar();
 }
 
+
+/* =====================================================
+   Todo削除
+===================================================== */
 
 function deleteTodo(
     index
@@ -2363,17 +2683,20 @@ function deleteTodo(
         1
     );
 
+
     saveData();
 
+
     showDateModal();
+
 
     renderCalendar();
 }
 
 
-/* =========================================
-   編集
-========================================= */
+/* =====================================================
+   予定編集
+===================================================== */
 
 function editSchedule(
     index
@@ -2398,12 +2721,8 @@ function editSchedule(
     }
 
 
-    const newTitle =
-        title.trim();
-
-
     if (
-        newTitle === ""
+        !title.trim()
     ) {
 
         return;
@@ -2411,16 +2730,48 @@ function editSchedule(
 
 
     schedule.title =
-        newTitle;
+        title.trim();
+
+
+    const repeat =
+        prompt(
+            "繰り返しを入力してください\n"
+            + "NONE / DAILY / WEEKLY / MONTHLY",
+            schedule.repeat
+        );
+
+
+    if (
+        repeat
+        &&
+        [
+            "NONE",
+            "DAILY",
+            "WEEKLY",
+            "MONTHLY"
+        ].includes(
+            repeat.toUpperCase()
+        )
+    ) {
+
+        schedule.repeat =
+            repeat.toUpperCase();
+    }
 
 
     saveData();
 
+
     showDateModal();
+
 
     renderCalendar();
 }
 
+
+/* =====================================================
+   Todo編集
+===================================================== */
 
 function editTodo(
     index
@@ -2445,12 +2796,8 @@ function editTodo(
     }
 
 
-    const newTitle =
-        title.trim();
-
-
     if (
-        newTitle === ""
+        !title.trim()
     ) {
 
         return;
@@ -2458,30 +2805,30 @@ function editTodo(
 
 
     todo.title =
-        newTitle;
+        title.trim();
 
 
     saveData();
 
+
     showDateModal();
+
 
     renderCalendar();
 }
 
 
-/* =========================================
-   追加画面
-========================================= */
+/* =====================================================
+   追加画面表示
+===================================================== */
 
 function showAddScreen() {
 
-    document
-        .getElementById(
-            "addScreen"
-        )
-        .classList.add(
-            "show"
-        );
+    document.getElementById(
+        "addScreen"
+    ).classList.add(
+        "show"
+    );
 
 
     document.getElementById(
@@ -2494,45 +2841,52 @@ function showAddScreen() {
 
     document.getElementById(
         "scheduleInput"
-    ).value = "";
+    ).value =
+        "";
 
 
     document.getElementById(
         "todoInput"
-    ).value = "";
+    ).value =
+        "";
 
 
     document.getElementById(
         "scheduleRepeat"
-    ).value = "NONE";
+    ).value =
+        "NONE";
 
 
     document.getElementById(
         "todoRepeat"
-    ).value = "NONE";
+    ).value =
+        "NONE";
 
 
     document.getElementById(
         "carryOver"
-    ).checked = false;
+    ).checked =
+        false;
 }
 
+
+/* =====================================================
+   追加画面を閉じる
+===================================================== */
 
 function hideAddScreen() {
 
-    document
-        .getElementById(
-            "addScreen"
-        )
-        .classList.remove(
-            "show"
-        );
+    document.getElementById(
+        "addScreen"
+    ).classList.remove(
+        "show"
+    );
 }
 
 
-/* =========================================
+/* =====================================================
    予定追加
-========================================= */
+===================================================== */
 
 document
     .getElementById(
@@ -2542,17 +2896,15 @@ document
         "click",
         () => {
 
-            const input =
+            const title =
                 document.getElementById(
                     "scheduleInput"
-                );
+                ).value.trim();
 
 
-            const title =
-                input.value.trim();
-
-
-            if (!title) {
+            if (
+                !title
+            ) {
 
                 alert(
                     "予定を入力してください"
@@ -2568,14 +2920,17 @@ document
                     createId(),
 
                 year:
-                    selectedDate.getFullYear(),
+                    selectedDate
+                        .getFullYear(),
 
                 month:
-                    selectedDate.getMonth()
-                    + 1,
+                    selectedDate
+                        .getMonth()
+                        + 1,
 
                 day:
-                    selectedDate.getDate(),
+                    selectedDate
+                        .getDate(),
 
                 title:
                     title,
@@ -2584,21 +2939,24 @@ document
                     document.getElementById(
                         "scheduleRepeat"
                     ).value
+
             });
 
 
             saveData();
 
+
             hideAddScreen();
+
 
             renderCalendar();
         }
     );
 
 
-/* =========================================
+/* =====================================================
    Todo追加
-========================================= */
+===================================================== */
 
 document
     .getElementById(
@@ -2608,17 +2966,15 @@ document
         "click",
         () => {
 
-            const input =
+            const title =
                 document.getElementById(
                     "todoInput"
-                );
+                ).value.trim();
 
 
-            const title =
-                input.value.trim();
-
-
-            if (!title) {
+            if (
+                !title
+            ) {
 
                 alert(
                     "Todoを入力してください"
@@ -2634,14 +2990,17 @@ document
                     createId(),
 
                 year:
-                    selectedDate.getFullYear(),
+                    selectedDate
+                        .getFullYear(),
 
                 month:
-                    selectedDate.getMonth()
-                    + 1,
+                    selectedDate
+                        .getMonth()
+                        + 1,
 
                 day:
-                    selectedDate.getDate(),
+                    selectedDate
+                        .getDate(),
 
                 title:
                     title,
@@ -2661,21 +3020,24 @@ document
                     document.getElementById(
                         "todoRepeat"
                     ).value
+
             });
 
 
             saveData();
 
+
             hideAddScreen();
+
 
             renderCalendar();
         }
     );
 
 
-/* =========================================
-   月変更
-========================================= */
+/* =====================================================
+   前月
+===================================================== */
 
 document
     .getElementById(
@@ -2687,16 +3049,25 @@ document
 
             currentMonth =
                 new Date(
-                    currentMonth.getFullYear(),
-                    currentMonth.getMonth()
-                    - 1,
+                    currentMonth
+                        .getFullYear(),
+
+                    currentMonth
+                        .getMonth()
+                        - 1,
+
                     1
                 );
+
 
             renderCalendar();
         }
     );
 
+
+/* =====================================================
+   次月
+===================================================== */
 
 document
     .getElementById(
@@ -2708,23 +3079,34 @@ document
 
             currentMonth =
                 new Date(
-                    currentMonth.getFullYear(),
-                    currentMonth.getMonth()
-                    + 1,
+                    currentMonth
+                        .getFullYear(),
+
+                    currentMonth
+                        .getMonth()
+                        + 1,
+
                     1
                 );
+
 
             renderCalendar();
         }
     );
 
 
-/* =========================================
-   スワイプ
-========================================= */
+/* =====================================================
+   左右スワイプ
+===================================================== */
 
-let touchStartX = 0;
-let touchStartY = 0;
+let touchStartX =
+    0;
+
+let touchStartY =
+    0;
+
+let suppressNextClick =
+    false;
 
 
 const calendar =
@@ -2738,12 +3120,16 @@ calendar.addEventListener(
     event => {
 
         touchStartX =
-            event.changedTouches[0]
+            event
+                .changedTouches[0]
                 .screenX;
 
+
         touchStartY =
-            event.changedTouches[0]
+            event
+                .changedTouches[0]
                 .screenY;
+
     },
     {
         passive: true
@@ -2756,44 +3142,89 @@ calendar.addEventListener(
     event => {
 
         const endX =
-            event.changedTouches[0]
+            event
+                .changedTouches[0]
                 .screenX;
 
+
         const endY =
-            event.changedTouches[0]
+            event
+                .changedTouches[0]
                 .screenY;
 
 
         const dx =
-            endX - touchStartX;
+            endX
+            - touchStartX;
+
 
         const dy =
-            endY - touchStartY;
+            endY
+            - touchStartY;
 
+
+        /*
+           横方向のスワイプだけ
+        */
 
         if (
             Math.abs(dx) > 60
-            && Math.abs(dx)
+            &&
+            Math.abs(dx)
                 > Math.abs(dy)
         ) {
 
-            if (dx < 0) {
+            /*
+               スワイプ後の
+               クリックイベントを無効化
+            */
+
+            suppressNextClick =
+                true;
+
+
+            setTimeout(
+                () => {
+
+                    suppressNextClick =
+                        false;
+
+                },
+                400
+            );
+
+
+            if (
+                dx < 0
+            ) {
+
+                /* 左スワイプ → 次月 */
 
                 currentMonth =
                     new Date(
-                        currentMonth.getFullYear(),
-                        currentMonth.getMonth()
-                        + 1,
+                        currentMonth
+                            .getFullYear(),
+
+                        currentMonth
+                            .getMonth()
+                            + 1,
+
                         1
                     );
 
             } else {
 
+                /* 右スワイプ → 前月 */
+
                 currentMonth =
                     new Date(
-                        currentMonth.getFullYear(),
-                        currentMonth.getMonth()
-                        - 1,
+                        currentMonth
+                            .getFullYear(),
+
+                        currentMonth
+                            .getMonth()
+                            - 1,
+
                         1
                     );
             }
@@ -2801,6 +3232,7 @@ calendar.addEventListener(
 
             renderCalendar();
         }
+
     },
     {
         passive: true
@@ -2808,9 +3240,9 @@ calendar.addEventListener(
 );
 
 
-/* =========================================
-   ＋ボタン
-========================================= */
+/* =====================================================
+   ホームの＋
+===================================================== */
 
 document
     .getElementById(
@@ -2823,10 +3255,15 @@ document
             selectedDate =
                 new Date();
 
+
             showAddScreen();
         }
     );
 
+
+/* =====================================================
+   日付詳細から追加
+===================================================== */
 
 document
     .getElementById(
@@ -2844,14 +3281,15 @@ document
                     "show"
                 );
 
+
             showAddScreen();
         }
     );
 
 
-/* =========================================
+/* =====================================================
    戻る
-========================================= */
+===================================================== */
 
 document
     .getElementById(
@@ -2863,9 +3301,9 @@ document
     );
 
 
-/* =========================================
-   モーダルを閉じる
-========================================= */
+/* =====================================================
+   日付モーダルを閉じる
+===================================================== */
 
 document
     .getElementById(
@@ -2889,9 +3327,9 @@ document
     );
 
 
-/* =========================================
+/* =====================================================
    年月選択
-========================================= */
+===================================================== */
 
 const yearMonthModal =
     document.getElementById(
@@ -2916,6 +3354,7 @@ function showYearMonthPicker() {
             "show"
         );
 
+
     updateYearMonthPicker();
 }
 
@@ -2934,7 +3373,8 @@ function updateYearMonthPicker() {
         );
 
 
-    grid.innerHTML = "";
+    grid.innerHTML =
+        "";
 
 
     for (
@@ -2969,8 +3409,11 @@ function updateYearMonthPicker() {
 
                 currentMonth =
                     new Date(
-                        currentMonth.getFullYear(),
+                        currentMonth
+                            .getFullYear(),
+
                         month,
+
                         1
                     );
 
@@ -2992,6 +3435,10 @@ function updateYearMonthPicker() {
 }
 
 
+/* =====================================================
+   前年
+===================================================== */
+
 document
     .getElementById(
         "previousYear"
@@ -3002,9 +3449,13 @@ document
 
             currentMonth =
                 new Date(
-                    currentMonth.getFullYear()
-                    - 1,
-                    currentMonth.getMonth(),
+                    currentMonth
+                        .getFullYear()
+                        - 1,
+
+                    currentMonth
+                        .getMonth(),
+
                     1
                 );
 
@@ -3013,6 +3464,10 @@ document
         }
     );
 
+
+/* =====================================================
+   翌年
+===================================================== */
 
 document
     .getElementById(
@@ -3024,9 +3479,13 @@ document
 
             currentMonth =
                 new Date(
-                    currentMonth.getFullYear()
-                    + 1,
-                    currentMonth.getMonth(),
+                    currentMonth
+                        .getFullYear()
+                        + 1,
+
+                    currentMonth
+                        .getMonth(),
+
                     1
                 );
 
@@ -3036,27 +3495,32 @@ document
     );
 
 
-yearMonthModal.addEventListener(
-    "click",
-    event => {
+/* =====================================================
+   年月モーダルを閉じる
+===================================================== */
 
-        if (
-            event.target
-            === yearMonthModal
-        ) {
+yearMonthModal
+    .addEventListener(
+        "click",
+        event => {
 
-            yearMonthModal
-                .classList.remove(
-                    "show"
-                );
+            if (
+                event.target
+                === yearMonthModal
+            ) {
+
+                yearMonthModal
+                    .classList.remove(
+                        "show"
+                    );
+            }
         }
-    }
-);
+    );
 
 
-/* =========================================
+/* =====================================================
    初期表示
-========================================= */
+===================================================== */
 
 renderCalendar();
 
@@ -3064,4 +3528,3 @@ renderCalendar();
 
 </body>
 </html>
-```
